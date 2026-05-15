@@ -97,17 +97,17 @@ export function CaptainProfile() {
                         <PieChart>
                             <Pie data={purseData} dataKey="value" cx="50%" cy="50%" innerRadius={55} outerRadius={80} paddingAngle={3}>
                                 <Cell fill={captain.color} />
-                                <Cell fill="var(--bg-elevated)" />
+                                <Cell fill="var(--surface-elevated)" />
                             </Pie>
                             <Tooltip
-                                contentStyle={{background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: 8, color: 'var(--text-primary)'}}
+                                contentStyle={{background: 'var(--surface-elevated)', border: '1px solid var(--hairline-strong)', borderRadius: 8, color: 'var(--ink)'}}
                                 formatter={(v: number) => [`${v} pts`, '']}
                             />
                         </PieChart>
                     </ResponsiveContainer>
                     <div className="chart-card__legend">
                         <span style={{color: captain.color}}>■ Spent {spent}</span>
-                        <span style={{color: 'var(--text-muted)'}}>■ Left {captain.purseRemaining}</span>
+                        <span style={{color: 'var(--muted)'}}>■ Left {captain.purseRemaining}</span>
                     </div>
                 </div>
 
@@ -116,11 +116,11 @@ export function CaptainProfile() {
                         <h3 className="chart-card__title">Squad by Group</h3>
                         <ResponsiveContainer width="100%" height={200}>
                             <BarChart data={groupData} barSize={32}>
-                                <XAxis dataKey="group" tick={{fill: 'var(--text-muted)', fontSize: 12}} axisLine={false} tickLine={false} />
-                                <YAxis tick={{fill: 'var(--text-muted)', fontSize: 11}} axisLine={false} tickLine={false} allowDecimals={false} />
+                                <XAxis dataKey="group" tick={{fill: 'var(--muted)', fontSize: 12}} axisLine={false} tickLine={false} />
+                                <YAxis tick={{fill: 'var(--muted)', fontSize: 11}} axisLine={false} tickLine={false} allowDecimals={false} />
                                 <Tooltip
-                                    contentStyle={{background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: 8, color: 'var(--text-primary)'}}
-                                    cursor={{fill: 'rgba(255,255,255,0.03)'}}
+                                    contentStyle={{background: 'var(--surface-elevated)', border: '1px solid var(--hairline-strong)', borderRadius: 8, color: 'var(--ink)'}}
+                                    cursor={{fill: 'var(--hairline)'}}
                                 />
                                 <Bar dataKey="players" radius={[4, 4, 0, 0]}>
                                     {groupData.map((entry, index) => (

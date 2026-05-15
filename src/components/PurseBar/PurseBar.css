@@ -13,11 +13,11 @@
 .purse-bar__name {
     font-size: 13px;
     font-weight: 600;
-    color: var(--text-primary);
+    color: var(--ink);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 120px;
+    max-width: 130px;
 }
 
 .purse-bar__value {
@@ -25,29 +25,30 @@
     font-size: 18px;
     font-weight: 700;
     transition: color 0.4s;
+    font-variant-numeric: tabular-nums;
 }
 
 .purse-bar__total {
     font-size: 12px;
-    color: var(--text-muted);
+    color: var(--muted);
     font-weight: 400;
 }
 
 .purse-bar__track {
-    height: 8px;
-    background: var(--bg-elevated);
-    border-radius: 4px;
+    height: 6px;
+    background: var(--surface-elevated);
+    border-radius: 3px;
     overflow: hidden;
 }
 
 .purse-bar__fill {
     height: 100%;
-    border-radius: 4px;
-    transition: background-color 0.4s, box-shadow 0.4s;
+    border-radius: 3px;
+    transition: background-color 0.4s;
 }
 
 .purse-bar--compact .purse-bar__track {
-    height: 5px;
+    height: 4px;
 }
 
 .purse-bar__compact-label {
@@ -60,7 +61,7 @@
 .purse-bar--compact .purse-bar__name {
     font-size: 11px;
     max-width: 80px;
-    color: var(--text-secondary);
+    color: var(--body);
 }
 
 .purse-bar--compact .purse-bar__value {

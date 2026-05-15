@@ -6,8 +6,8 @@
 
 .layout__header {
     height: 56px;
-    background: var(--bg-surface);
-    border-bottom: 1px solid var(--border);
+    background: var(--canvas);
+    border-bottom: 1px solid var(--hairline-strong);
     display: flex;
     align-items: center;
     padding: 0 24px;
@@ -15,52 +15,79 @@
     position: sticky;
     top: 0;
     z-index: 100;
+    transition: background-color 0.2s, border-color 0.2s;
 }
 
 .layout__brand {
-    display: flex;
-    align-items: center;
-    gap: 10px;
     flex-shrink: 0;
-}
-
-.layout__brand-icon {
-    font-size: 22px;
 }
 
 .layout__brand-name {
     font-family: var(--font-display);
     font-size: 20px;
     font-weight: 800;
-    letter-spacing: 0.04em;
-    color: var(--text-primary);
+    letter-spacing: 0.05em;
+    color: var(--primary);
     text-transform: uppercase;
 }
 
 .layout__nav {
     display: flex;
-    gap: 4px;
+    gap: 2px;
     align-items: center;
+    flex: 1;
 }
 
 .layout__nav-link {
     font-size: 13px;
-    font-weight: 600;
-    color: var(--text-secondary);
+    font-weight: 500;
+    color: var(--muted);
     padding: 6px 14px;
-    border-radius: var(--radius-sm);
+    border-radius: var(--r-sm);
     transition: color 0.15s, background 0.15s;
-    letter-spacing: 0.02em;
+    letter-spacing: 0.01em;
+    position: relative;
 }
 
 .layout__nav-link:hover {
-    color: var(--text-primary);
-    background: var(--bg-elevated);
+    color: var(--ink);
+    background: var(--surface-elevated);
 }
 
 .layout__nav-link--active {
-    color: var(--accent);
-    background: var(--accent-glow);
+    color: var(--ink);
+    background: var(--surface-card);
+    font-weight: 600;
+}
+
+.layout__nav-link--active::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 14px;
+    right: 14px;
+    height: 2px;
+    background: var(--primary);
+    border-radius: var(--r-xs);
+}
+
+.layout__theme-toggle {
+    margin-left: auto;
+    background: var(--surface-elevated);
+    border: 1px solid var(--hairline-strong);
+    border-radius: var(--r-pill);
+    color: var(--muted);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    padding: 5px 14px;
+    text-transform: uppercase;
+    transition: color 0.15s, border-color 0.15s, background 0.15s;
+}
+
+.layout__theme-toggle:hover {
+    color: var(--ink);
+    border-color: var(--muted);
 }
 
 .layout__main {
