@@ -1,0 +1,107 @@
+.captain-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+}
+
+@media (max-width: 900px) {
+    .captain-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 560px) {
+    .captain-grid { grid-template-columns: 1fr; }
+}
+
+.captain-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-top: 3px solid var(--captain-color);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+    transition: border-color 0.2s, transform 0.15s, box-shadow 0.15s;
+}
+
+.captain-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+}
+
+.captain-card__link {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 18px;
+    text-decoration: none;
+    color: inherit;
+}
+
+.captain-card__header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.captain-card__name {
+    font-family: var(--font-display);
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--text-primary);
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.captain-card__purse {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+}
+
+.captain-card__purse-value {
+    font-family: var(--font-display);
+    font-size: 42px;
+    font-weight: 800;
+    line-height: 1;
+    transition: color 0.4s;
+}
+
+.captain-card__purse-label {
+    font-size: 12px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.captain-card__stats {
+    display: flex;
+    gap: 0;
+    border-top: 1px solid var(--border-subtle);
+    padding-top: 12px;
+}
+
+.captain-card__stat {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+}
+
+.captain-card__stat + .captain-card__stat {
+    border-left: 1px solid var(--border-subtle);
+}
+
+.captain-card__stat-value {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.captain-card__stat-label {
+    font-size: 10px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}

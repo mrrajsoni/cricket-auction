@@ -1,0 +1,171 @@
+.auction-room {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 24px;
+    height: calc(100vh - 56px - 48px);
+    align-items: start;
+}
+
+.auction-room__main {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.auction-room__sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    position: sticky;
+    top: 80px;
+    max-height: calc(100vh - 100px);
+}
+
+.auction-room__sold-banner {
+    min-height: 220px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sold-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 32px 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    text-align: center;
+    box-shadow: var(--shadow-card);
+    position: relative;
+    overflow: hidden;
+}
+
+.sold-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, var(--accent-glow), transparent 70%);
+    pointer-events: none;
+}
+
+.sold-card__stamp {
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    color: var(--accent);
+    background: var(--accent-glow);
+    border: 1px solid var(--accent);
+    padding: 3px 14px;
+    border-radius: 4px;
+}
+
+.sold-card__player {
+    font-family: var(--font-display);
+    font-size: 48px;
+    font-weight: 800;
+    color: var(--text-primary);
+    line-height: 1;
+}
+
+.sold-card__meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 4px;
+}
+
+.sold-card__to {
+    font-size: 13px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.sold-card__captain {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text-secondary);
+}
+
+.sold-card__points {
+    font-family: var(--font-display);
+    font-size: 56px;
+    font-weight: 800;
+    color: var(--accent);
+    line-height: 1;
+    text-shadow: 0 0 30px var(--accent-glow);
+}
+
+.sold-card--empty {
+    background: var(--bg-surface);
+    border-style: dashed;
+}
+
+.sold-card__idle {
+    font-family: var(--font-display);
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--text-muted);
+}
+
+.sold-card__idle-sub {
+    font-size: 14px;
+    color: var(--text-muted);
+}
+
+.auction-room__stats-strip {
+    display: flex;
+    gap: 12px;
+}
+
+.stat-chip {
+    flex: 1;
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.stat-chip__value {
+    font-family: var(--font-display);
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--text-primary);
+    line-height: 1;
+}
+
+.stat-chip__label {
+    font-size: 10px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.auction-room__purses {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 20px 24px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+@media (max-width: 1100px) {
+    .auction-room {
+        grid-template-columns: 1fr;
+        height: auto;
+    }
+    .auction-room__sidebar { position: static; max-height: none; }
+    .auction-room__purses { grid-template-columns: repeat(2, 1fr); }
+}

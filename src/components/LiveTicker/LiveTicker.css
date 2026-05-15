@@ -1,0 +1,106 @@
+.live-ticker {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.live-ticker__header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg-elevated);
+}
+
+.live-ticker__dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--danger);
+    box-shadow: 0 0 6px var(--danger);
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(0.85); }
+}
+
+.live-ticker__title {
+    font-family: var(--font-display);
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-primary);
+    flex: 1;
+}
+
+.live-ticker__count {
+    font-size: 12px;
+    color: var(--text-muted);
+    background: var(--bg-card);
+    padding: 2px 8px;
+    border-radius: 10px;
+}
+
+.live-ticker__list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.live-ticker__item {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    padding: 10px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.live-ticker__item-top {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.live-ticker__player {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.live-ticker__item-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.live-ticker__captain {
+    font-size: 11px;
+    color: var(--text-secondary);
+}
+
+.live-ticker__points {
+    font-family: var(--font-display);
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--accent);
+}
+
+.live-ticker__empty {
+    color: var(--text-muted);
+    font-size: 13px;
+    text-align: center;
+    padding: 32px 16px;
+}

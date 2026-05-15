@@ -1,0 +1,72 @@
+.layout {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.layout__header {
+    height: 56px;
+    background: var(--bg-surface);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    padding: 0 24px;
+    gap: 32px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.layout__brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+.layout__brand-icon {
+    font-size: 22px;
+}
+
+.layout__brand-name {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    color: var(--text-primary);
+    text-transform: uppercase;
+}
+
+.layout__nav {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+}
+
+.layout__nav-link {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    padding: 6px 14px;
+    border-radius: var(--radius-sm);
+    transition: color 0.15s, background 0.15s;
+    letter-spacing: 0.02em;
+}
+
+.layout__nav-link:hover {
+    color: var(--text-primary);
+    background: var(--bg-elevated);
+}
+
+.layout__nav-link--active {
+    color: var(--accent);
+    background: var(--accent-glow);
+}
+
+.layout__main {
+    flex: 1;
+    padding: 24px;
+    max-width: 1400px;
+    width: 100%;
+    margin: 0 auto;
+}

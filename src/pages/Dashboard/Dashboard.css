@@ -1,0 +1,112 @@
+.dashboard {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.dashboard__hero {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+}
+
+.hero-stat {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 20px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.hero-stat__value {
+    font-family: var(--font-display);
+    font-size: 44px;
+    font-weight: 800;
+    color: var(--text-primary);
+    line-height: 1;
+}
+
+.hero-stat__label {
+    font-size: 12px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.dashboard__body {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 24px;
+    align-items: start;
+}
+
+.dashboard__section-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+}
+
+.dashboard__left {
+    display: flex;
+    flex-direction: column;
+}
+
+.dashboard__right {
+    position: sticky;
+    top: 80px;
+}
+
+.dashboard__ticker {
+    height: 480px;
+}
+
+.group-progress {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 20px 24px;
+}
+
+.group-progress__row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.group-progress__track {
+    flex: 1;
+    height: 10px;
+    background: var(--bg-elevated);
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.group-progress__fill {
+    height: 100%;
+    border-radius: 5px;
+    transition: width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.group-progress__label {
+    font-family: var(--font-display);
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-secondary);
+    min-width: 36px;
+    text-align: right;
+}
+
+@media (max-width: 1000px) {
+    .dashboard__hero { grid-template-columns: repeat(2, 1fr); }
+    .dashboard__body { grid-template-columns: 1fr; }
+    .dashboard__right { position: static; }
+    .dashboard__ticker { height: 320px; }
+}

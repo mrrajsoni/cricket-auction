@@ -1,0 +1,19 @@
+.group-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    border-radius: 4px;
+    border: 1px solid currentColor;
+}
+
+.group-badge--sm { font-size: 10px; padding: 1px 6px; }
+.group-badge--md { font-size: 12px; padding: 2px 8px; }
+.group-badge--lg { font-size: 16px; padding: 4px 12px; }
+
+.group-badge--a { color: var(--group-a); background: var(--group-a-glow); border-color: var(--group-a); }
+.group-badge--b { color: var(--group-b); background: var(--group-b-glow); border-color: var(--group-b); }
+.group-badge--c { color: var(--group-c); background: var(--group-c-glow); border-color: var(--group-c); }
+.group-badge--d { color: var(--group-d); background: var(--group-d-glow); border-color: var(--group-d); }
