@@ -5,9 +5,12 @@ import './Layout.css';
 type Theme = 'dark' | 'light';
 
 const NAV_ITEMS = [
-    {to: '/auction', label: 'Auction Room'},
+    {to: '/live', label: 'Live'},
+    {to: '/owners', label: 'Owners'},
+    {to: '/auction', label: 'Record Sale'},
     {to: '/dashboard', label: 'Dashboard'},
     {to: '/players', label: 'Players'},
+    {to: '/setup', label: 'Setup'},
 ];
 
 export function Layout() {

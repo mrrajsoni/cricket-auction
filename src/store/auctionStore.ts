@@ -1,7 +1,14 @@
 import { create } from "zustand";
 import type { DbBid, DbCaptain, DbPlayer } from "@/lib/supabase";
-import type { Bid, Captain, Player } from "@/types";
+import type { Bid, Captain, Group, LiveBidEntry, LiveSession, Player } from "@/types";
 import { supabase } from "@/supabase/utils/supabase";
+import { OPENING_BID } from "@/lib/bidIncrements";
+import type { NewAuctionData } from "@/types";
+
+export const CAPTAIN_COLORS = [
+    '#3b82f6', '#6366f1', '#f59e0b', '#f97316',
+    '#10b981', '#ec4899', '#8b5cf6', '#14b8a6',
+];
 
 // ── Mappers: DB row → app type ────────────────────────────────────────────────
 
@@ -37,6 +44,7 @@ interface AuctionState {
     bids: Bid[];
     loading: boolean;
     error: string | null;
+    liveSession: LiveSession | null;
 
     initialize: () => Promise<void>;
     placeBid: (
@@ -46,6 +54,18 @@ interface AuctionState {
     ) => Promise<void>;
     undoLastBid: () => Promise<void>;
     clearError: () => void;
+
+    createAuction: (data: NewAuctionData) => Promise<void>;
+
+    // Live bidding actions
+    selectGroupAndShuffle: (group: Group) => void;
+    raiseLiveBid: (captainId: string, newAmount: number) => void;
+    confirmSale: () => Promise<void>;
+    markUnsold: () => Promise<void>;
+    advancePlayer: () => void;
+    previousPlayer: () => void;
+    jumpToPlayer: (index: number) => void;
+    subscribeLiveSession: () => void;
 }
 
 export const useAuctionStore = create<AuctionState>((set, get) => ({
@@ -55,6 +75,7 @@ export const useAuctionStore = create<AuctionState>((set, get) => ({
     bids: [],
     loading: false,
     error: null,
+    liveSession: null,
 
     initialize: async () => {
         set({ loading: true, error: null });
@@ -321,11 +342,232 @@ export const useAuctionStore = create<AuctionState>((set, get) => ({
     },
 
     clearError: () => set({ error: null }),
+
+    // ── Auction creation ───────────────────────────────────────────────────────
+
+    createAuction: async (data) => {
+        set({ loading: true, error: null });
+
+        // 1. Complete any existing active auction
+        await supabase
+            .from('auctions')
+            .update({ status: 'completed' })
+            .eq('status', 'active');
+
+        // 2. Create the new auction
+        const { data: auction, error: aErr } = await supabase
+            .from('auctions')
+            .insert({
+                name: data.name,
+                status: 'active',
+                date: new Date().toISOString().split('T')[0],
+            })
+            .select('id')
+            .single();
+
+        if (aErr || !auction) {
+            set({ loading: false, error: 'Failed to create auction: ' + aErr?.message });
+            return;
+        }
+
+        const auctionId = auction.id;
+
+        // 3. Insert captains and players in parallel
+        const [captainsRes, playersRes] = await Promise.all([
+            supabase.from('captains').insert(
+                data.captains.map((c, i) => ({
+                    auction_id: auctionId,
+                    name: c.name,
+                    group: 'A' as const,
+                    purse_total: c.purse,
+                    purse_remaining: c.purse,
+                    color: CAPTAIN_COLORS[i % CAPTAIN_COLORS.length],
+                }))
+            ),
+            supabase.from('players').insert(
+                data.players.map((p) => ({
+                    auction_id: auctionId,
+                    name: p.name,
+                    group: p.group,
+                    base_value: 0,
+                    status: 'available' as const,
+                }))
+            ),
+        ]);
+
+        if (captainsRes.error || playersRes.error) {
+            set({
+                loading: false,
+                error: 'Failed to save data: ' + (captainsRes.error?.message ?? playersRes.error?.message),
+            });
+            return;
+        }
+
+        // 4. Reload the new auction into app state
+        await get().initialize();
+    },
+
+    // ── Live bidding ───────────────────────────────────────────────────────────
+
+    selectGroupAndShuffle: (group) => {
+        const { players } = get();
+        const pool = players.filter(
+            (p) => p.group === group && p.status === "available",
+        );
+
+        // Fisher-Yates shuffle
+        const shuffled = [...pool];
+        for (let i = shuffled.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        }
+
+        const session: LiveSession = {
+            activeGroup: group,
+            playerQueue: shuffled.map((p) => p.id),
+            currentQueueIndex: 0,
+            liveBidAmount: OPENING_BID,
+            highestCaptainId: null,
+            liveBidTimeline: [],
+        };
+
+        set({ liveSession: session });
+        broadcastLiveState(session);
+    },
+
+    raiseLiveBid: (captainId, newAmount) => {
+        const { captains, liveSession } = get();
+        if (!liveSession) return;
+        const captain = captains.find((c) => c.id === captainId);
+        if (!captain) return;
+
+        const entry: LiveBidEntry = {
+            captainId,
+            captainName: captain.name,
+            amount: newAmount,
+            timestamp: new Date(),
+        };
+
+        const session: LiveSession = {
+            ...liveSession,
+            liveBidAmount: newAmount,
+            highestCaptainId: captainId,
+            liveBidTimeline: [...liveSession.liveBidTimeline, entry],
+        };
+
+        set({ liveSession: session });
+        broadcastLiveState(session);
+    },
+
+    confirmSale: async () => {
+        const { liveSession, players } = get();
+        if (!liveSession || !liveSession.highestCaptainId) return;
+
+        const currentPlayerId =
+            liveSession.playerQueue[liveSession.currentQueueIndex];
+        const currentPlayer = players.find((p) => p.id === currentPlayerId);
+        if (!currentPlayer) return;
+
+        await get().placeBid(
+            currentPlayer.name,
+            liveSession.highestCaptainId,
+            liveSession.liveBidAmount,
+        );
+
+        // Advance after sale
+        get().advancePlayer();
+    },
+
+    markUnsold: async () => {
+        const { liveSession, players } = get();
+        if (!liveSession) return;
+
+        const currentPlayerId =
+            liveSession.playerQueue[liveSession.currentQueueIndex];
+        const currentPlayer = players.find((p) => p.id === currentPlayerId);
+        if (!currentPlayer) return;
+
+        // Optimistic update
+        set((s) => ({
+            players: s.players.map((p) =>
+                p.id === currentPlayerId ? { ...p, status: "unsold" } : p,
+            ),
+        }));
+
+        await supabase
+            .from("players")
+            .update({ status: "unsold" })
+            .eq("id", currentPlayerId);
+
+        get().advancePlayer();
+    },
+
+    advancePlayer: () => {
+        const { liveSession } = get();
+        if (!liveSession) return;
+        get().jumpToPlayer(liveSession.currentQueueIndex + 1);
+    },
+
+    previousPlayer: () => {
+        const { liveSession } = get();
+        if (!liveSession || liveSession.currentQueueIndex <= 0) return;
+        get().jumpToPlayer(liveSession.currentQueueIndex - 1);
+    },
+
+    jumpToPlayer: (index) => {
+        const { liveSession } = get();
+        if (!liveSession || index < 0 || index >= liveSession.playerQueue.length) return;
+
+        const session: LiveSession = {
+            ...liveSession,
+            currentQueueIndex: index,
+            liveBidAmount: OPENING_BID,
+            highestCaptainId: null,
+            liveBidTimeline: [],
+        };
+
+        set({ liveSession: session });
+        broadcastLiveState(session);
+    },
+
+    subscribeLiveSession: () => {
+        const { auctionId } = get();
+        if (!auctionId || liveBroadcastChannel) return;
+
+        liveBroadcastChannel = supabase
+            .channel(`live:${auctionId}`)
+            .on("broadcast", { event: "session_update" }, ({ payload }) => {
+                if (payload) {
+                    set({
+                        liveSession: {
+                            ...payload,
+                            liveBidTimeline: (
+                                payload.liveBidTimeline as LiveBidEntry[]
+                            ).map((e) => ({
+                                ...e,
+                                timestamp: new Date(e.timestamp),
+                            })),
+                        },
+                    });
+                }
+            })
+            .subscribe();
+    },
 }));
 
 // ── Realtime: merge updates from other connected devices ──────────────────────
 
 let realtimeChannel: ReturnType<typeof supabase.channel> | null = null;
+let liveBroadcastChannel: ReturnType<typeof supabase.channel> | null = null;
+
+function broadcastLiveState(session: LiveSession | null) {
+    if (!liveBroadcastChannel) return;
+    liveBroadcastChannel.send({
+        type: "broadcast",
+        event: "session_update",
+        payload: session,
+    });
+}
 
 function subscribeToRealtime(auctionId: string) {
     // Clean up any existing subscription

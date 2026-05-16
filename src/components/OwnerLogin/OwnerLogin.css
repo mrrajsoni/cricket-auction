@@ -1,0 +1,83 @@
+.owner-login {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+    padding: 40px 0;
+}
+
+.owner-login__header {
+    text-align: center;
+}
+
+.owner-login__title {
+    font-family: var(--font-display);
+    font-size: 40px;
+    font-weight: 800;
+    color: var(--ink);
+    margin-bottom: 6px;
+}
+
+.owner-login__sub {
+    font-size: 14px;
+    color: var(--muted);
+}
+
+.owner-login__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    width: 100%;
+    max-width: 720px;
+}
+
+@media (max-width: 600px) {
+    .owner-login__grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+.owner-card {
+    background: var(--surface-card);
+    border: 1px solid var(--hairline-strong);
+    border-top: 3px solid var(--captain-color);
+    border-radius: var(--r-lg);
+    padding: 20px 18px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    cursor: pointer;
+    text-align: left;
+    transition: transform 0.15s, border-color 0.15s, background 0.15s;
+}
+
+.owner-card:hover {
+    background: var(--surface-elevated);
+    transform: translateY(-2px);
+}
+
+.owner-card__header {
+    margin-bottom: 4px;
+}
+
+.owner-card__name {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.1;
+}
+
+.owner-card__purse {
+    font-family: var(--font-display);
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1;
+    margin-top: 6px;
+    font-variant-numeric: tabular-nums;
+}
+
+.owner-card__purse-label {
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}

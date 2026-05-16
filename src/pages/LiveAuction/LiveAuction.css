@@ -1,0 +1,123 @@
+.live-auction {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    height: calc(100vh - 56px - 48px);
+    position: relative;
+}
+
+.live-auction__admin-badge {
+    position: absolute;
+    top: -12px;
+    right: 0;
+    background: var(--primary);
+    color: var(--on-primary);
+    font-family: var(--font-display);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    padding: 3px 10px;
+    border-radius: var(--r-pill);
+    z-index: 10;
+}
+
+.live-auction__content {
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    gap: 16px;
+    flex: 1;
+    min-height: 0;
+}
+
+.live-auction--admin .live-auction__content {
+    grid-template-columns: 1fr 260px 280px;
+}
+
+.live-auction__spotlight {
+    min-height: 0;
+}
+
+.live-auction__timeline {
+    min-height: 0;
+}
+
+.live-auction__panel {
+    min-height: 0;
+}
+
+.live-auction__purses {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+.live-purse-card {
+    background: var(--surface-card);
+    border: 1px solid var(--hairline-strong);
+    border-top: 3px solid var(--captain-color);
+    border-radius: var(--r-lg);
+    padding: 14px 16px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.live-purse-card__name {
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--ink);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.live-purse-card__value {
+    font-family: var(--font-display);
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+    transition: color 0.4s;
+}
+
+.live-purse-card__label {
+    font-size: 10px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 8px;
+}
+
+/* slim the track inside the card — it's decorative here */
+.live-purse-card .purse-bar__track {
+    height: 4px;
+}
+
+@media (max-width: 1200px) {
+    .live-auction--admin .live-auction__content {
+        grid-template-columns: 1fr 240px;
+    }
+    .live-auction--admin .live-auction__panel {
+        display: none;
+    }
+}
+
+@media (max-width: 900px) {
+    .live-auction {
+        height: auto;
+    }
+    .live-auction__content {
+        grid-template-columns: 1fr;
+    }
+    .live-auction__purses {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 560px) {
+    .live-auction__purses {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

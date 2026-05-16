@@ -5,6 +5,9 @@ import {AuctionRoom} from '@/pages/AuctionRoom/AuctionRoom';
 import {Dashboard} from '@/pages/Dashboard/Dashboard';
 import {PlayerPool} from '@/pages/PlayerPool/PlayerPool';
 import {CaptainProfile} from '@/pages/CaptainProfile/CaptainProfile';
+import {LiveAuction} from '@/pages/LiveAuction/LiveAuction';
+import {OwnerBid} from '@/pages/OwnerBid/OwnerBid';
+import {NewAuction} from '@/pages/NewAuction/NewAuction';
 import {useAuctionStore} from '@/store/auctionStore';
 import './styles/app-init.css';
 
@@ -46,6 +49,10 @@ export function App() {
                     <Route element={<Layout />}>
                         <Route index element={<Navigate to="/auction" replace />} />
                         <Route path="/auction" element={<AuctionRoom />} />
+                        <Route path="/live" element={<LiveAuction isAdmin={false} />} />
+                        <Route path="/live/admin" element={<LiveAuction isAdmin={true} />} />
+                        <Route path="/owners" element={<OwnerBid />} />
+                        <Route path="/setup" element={<NewAuction />} />
                         <Route path="/dashboard" element={<Dashboard />} />
                         <Route path="/players" element={<PlayerPool />} />
                         <Route path="/captain/:captainId" element={<CaptainProfile />} />
