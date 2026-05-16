@@ -1,0 +1,246 @@
+/* ─── StepPlayers ────────────────────────────────────────────────────────────
+   Step 3 of the auction setup wizard.
+   Features: manual player table + paste-import panel.
+ ──────────────────────────────────────────────────────────────────────────── */
+
+/* ── Player table ─────────────────────────────────────────────────────────── */
+
+/* Compact inputs inside each table row */
+.wiz-input--sm {
+    height: 36px;
+    font-size: 14px;
+}
+
+/* Fixed column widths for the players table */
+.col-idx    { width: 32px; }
+.col-group  { width: 120px; }
+.col-remove { width: 40px; }
+
+/* Remove (×) button at the end of each player row */
+.remove-btn {
+    width: 28px;
+    height: 28px;
+    border-radius: var(--r-sm);
+    border: 1px solid var(--hairline-strong);
+    background: transparent;
+    color: var(--muted);
+    font-size: 16px;
+    line-height: 1;
+    cursor: pointer;
+    transition: color 0.15s, border-color 0.15s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.remove-btn:hover:not(:disabled) {
+    color: var(--down);
+    border-color: var(--down);
+}
+
+.remove-btn:disabled {
+    opacity: 0.25;
+    cursor: not-allowed;
+}
+
+/* Full-width "Add Player" dashed CTA below the table */
+.add-player-btn {
+    margin-top: 14px;
+    background: var(--surface-elevated);
+    border: 1px dashed var(--hairline-strong);
+    border-radius: var(--r-md);
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: 600;
+    padding: 9px 0;
+    width: 100%;
+    cursor: pointer;
+    transition: color 0.15s, border-color 0.15s;
+}
+
+.add-player-btn:hover {
+    color: var(--ink);
+    border-color: var(--primary);
+    border-style: solid;
+}
+
+/* Player count + keyboard hint below the table */
+.players-footer-hint {
+    margin-top: 12px;
+}
+
+/* ── Paste import panel ────────────────────────────────────────────────────── */
+
+/* Wrapper for the collapsible paste import feature */
+.paste-panel {
+    margin-bottom: 20px;
+}
+
+/* Toggle button that opens/closes the paste panel */
+.paste-toggle {
+    background: transparent;
+    border: 1px solid var(--hairline-strong);
+    border-radius: var(--r-sm);
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    padding: 6px 14px;
+    cursor: pointer;
+    transition: color 0.15s, border-color 0.15s;
+}
+
+.paste-toggle:hover {
+    color: var(--ink);
+    border-color: var(--primary);
+}
+
+/* Expanded body of the paste panel (shown when paste-panel is open) */
+.paste-body {
+    margin-top: 12px;
+    background: var(--surface-elevated);
+    border: 1px solid var(--hairline-strong);
+    border-radius: var(--r-lg);
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* Explanatory text at the top of the paste body */
+.paste-hint {
+    font-size: 13px;
+    color: var(--muted);
+}
+
+/* Formatted example of the expected paste syntax */
+.paste-example {
+    font-family: var(--font-display);
+    font-size: 12px;
+    color: var(--muted-strong);
+    background: var(--canvas);
+    border: 1px solid var(--hairline);
+    border-radius: var(--r-sm);
+    padding: 10px 14px;
+    white-space: pre;
+    line-height: 1.6;
+}
+
+/* Multi-line textarea where the user pastes their player list */
+.paste-textarea {
+    width: 100%;
+    background: var(--canvas);
+    border: 1px solid var(--hairline-strong);
+    border-radius: var(--r-md);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 13px;
+    line-height: 1.6;
+    padding: 10px 14px;
+    resize: vertical;
+    outline: none;
+    transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.paste-textarea:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px var(--focus-ring);
+}
+
+/* Row containing the Parse / Import action buttons */
+.paste-actions {
+    display: flex;
+    gap: 8px;
+}
+
+/* Shared base for Parse and Import action buttons */
+.paste-btn {
+    border: none;
+    border-radius: var(--r-sm);
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    padding: 9px 20px;
+    cursor: pointer;
+    transition: background 0.15s, opacity 0.15s;
+}
+
+.paste-btn:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+}
+
+/* Parse button — secondary style, triggers parsing without applying */
+.paste-btn--parse {
+    background: var(--surface-card);
+    color: var(--ink);
+    border: 1px solid var(--hairline-strong);
+}
+
+.paste-btn--parse:hover:not(:disabled) {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+/* Import button — primary gold, applies the parsed players */
+.paste-btn--apply {
+    background: var(--primary);
+    color: var(--on-primary);
+}
+
+.paste-btn--apply:hover {
+    background: var(--primary-active);
+}
+
+/* ── Parse preview ─────────────────────────────────────────────────────────── */
+
+/* Section shown below Parse button once parsing is complete */
+.paste-preview {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-top: 4px;
+    border-top: 1px solid var(--hairline);
+}
+
+/* "N players detected across M groups" success message */
+.paste-preview__count {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--up);
+}
+
+/* Flex wrap of player preview chips */
+.paste-preview__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+/* Individual player chip in the preview list */
+.paste-preview__chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: var(--canvas);
+    border: 1px solid var(--hairline);
+    border-radius: var(--r-pill);
+    font-size: 11px;
+    color: var(--body);
+    padding: 3px 10px;
+}
+
+/* "+N more" overflow chip when preview is truncated */
+.paste-preview__chip--more {
+    color: var(--muted);
+    font-style: italic;
+}
+
+/* Group label prefix inside each preview chip (e.g. "G1") */
+.paste-preview__group {
+    font-family: var(--font-display);
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--primary);
+}

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import type { NewAuctionPlayer } from '@/types';
 import { parsePlayers, maxGroupNumber } from '@/lib/playerParser';
+import './StepPlayers.css';
 
 interface StepPlayersProps {
     players: NewAuctionPlayer[];
@@ -109,10 +110,10 @@ export function StepPlayers({ players, activeGroups, onChange, onNumGroupsChange
             <table className="wiz-table">
                 <thead>
                     <tr>
-                        <th style={{ width: 32 }}>#</th>
+                        <th className="col-idx">#</th>
                         <th>Player Name</th>
-                        <th style={{ width: 120 }}>Group</th>
-                        <th style={{ width: 40 }} />
+                        <th className="col-group">Group</th>
+                        <th className="col-remove" />
                     </tr>
                 </thead>
                 <tbody>
@@ -121,8 +122,7 @@ export function StepPlayers({ players, activeGroups, onChange, onNumGroupsChange
                             <td className="wiz-idx">{i + 1}</td>
                             <td>
                                 <input
-                                    className="wiz-input"
-                                    style={{ height: 36, fontSize: 14 }}
+                                    className="wiz-input wiz-input--sm"
                                     placeholder="Player name"
                                     value={p.name}
                                     onChange={e => update(i, { name: e.target.value })}
@@ -136,8 +136,7 @@ export function StepPlayers({ players, activeGroups, onChange, onNumGroupsChange
                             </td>
                             <td>
                                 <select
-                                    className="wiz-input"
-                                    style={{ height: 36, fontSize: 14 }}
+                                    className="wiz-input wiz-input--sm"
                                     value={p.group}
                                     onChange={e => update(i, { group: e.target.value })}
                                 >
@@ -166,170 +165,12 @@ export function StepPlayers({ players, activeGroups, onChange, onNumGroupsChange
                 + Add Player
             </button>
 
-            <p className="wiz-helper" style={{ marginTop: 12 }}>
+            <p className="wiz-helper players-footer-hint">
                 {players.length} players across {activeGroups.length} group{activeGroups.length > 1 ? 's' : ''}.
                 Press <strong>Enter</strong> in a name field to quickly add the next player.
             </p>
 
-            <style>{`
-                .remove-btn {
-                    width: 28px;
-                    height: 28px;
-                    border-radius: var(--r-sm);
-                    border: 1px solid var(--hairline-strong);
-                    background: transparent;
-                    color: var(--muted);
-                    font-size: 16px;
-                    line-height: 1;
-                    cursor: pointer;
-                    transition: color 0.15s, border-color 0.15s;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                }
-                .remove-btn:hover:not(:disabled) { color: var(--down); border-color: var(--down); }
-                .remove-btn:disabled { opacity: 0.25; cursor: not-allowed; }
 
-                .add-player-btn {
-                    margin-top: 14px;
-                    background: var(--surface-elevated);
-                    border: 1px dashed var(--hairline-strong);
-                    border-radius: var(--r-md);
-                    color: var(--muted);
-                    font-size: 13px;
-                    font-weight: 600;
-                    padding: 9px 0;
-                    width: 100%;
-                    cursor: pointer;
-                    transition: color 0.15s, border-color 0.15s;
-                }
-                .add-player-btn:hover { color: var(--ink); border-color: var(--primary); border-style: solid; }
-
-                /* Paste panel */
-                .paste-panel {
-                    margin-bottom: 20px;
-                }
-                .paste-toggle {
-                    background: transparent;
-                    border: 1px solid var(--hairline-strong);
-                    border-radius: var(--r-sm);
-                    color: var(--muted);
-                    font-size: 12px;
-                    font-weight: 600;
-                    letter-spacing: 0.04em;
-                    padding: 6px 14px;
-                    cursor: pointer;
-                    transition: color 0.15s, border-color 0.15s;
-                }
-                .paste-toggle:hover { color: var(--ink); border-color: var(--primary); }
-
-                .paste-body {
-                    margin-top: 12px;
-                    background: var(--surface-elevated);
-                    border: 1px solid var(--hairline-strong);
-                    border-radius: var(--r-lg);
-                    padding: 18px;
-                    display: flex;
-                    flex-direction: column;
-                    gap: 12px;
-                }
-                .paste-hint {
-                    font-size: 13px;
-                    color: var(--muted);
-                }
-                .paste-example {
-                    font-family: var(--font-display);
-                    font-size: 12px;
-                    color: var(--muted-strong);
-                    background: var(--canvas);
-                    border: 1px solid var(--hairline);
-                    border-radius: var(--r-sm);
-                    padding: 10px 14px;
-                    white-space: pre;
-                    line-height: 1.6;
-                }
-                .paste-textarea {
-                    width: 100%;
-                    background: var(--canvas);
-                    border: 1px solid var(--hairline-strong);
-                    border-radius: var(--r-md);
-                    color: var(--ink);
-                    font-family: var(--font-body);
-                    font-size: 13px;
-                    line-height: 1.6;
-                    padding: 10px 14px;
-                    resize: vertical;
-                    outline: none;
-                    transition: border-color 0.15s, box-shadow 0.15s;
-                }
-                .paste-textarea:focus {
-                    border-color: var(--primary);
-                    box-shadow: 0 0 0 3px var(--focus-ring);
-                }
-                .paste-actions { display: flex; gap: 8px; }
-                .paste-btn {
-                    border: none;
-                    border-radius: var(--r-sm);
-                    font-family: var(--font-display);
-                    font-size: 13px;
-                    font-weight: 700;
-                    letter-spacing: 0.06em;
-                    padding: 9px 20px;
-                    cursor: pointer;
-                    transition: background 0.15s, opacity 0.15s;
-                }
-                .paste-btn:disabled { opacity: 0.35; cursor: not-allowed; }
-                .paste-btn--parse {
-                    background: var(--surface-card);
-                    color: var(--ink);
-                    border: 1px solid var(--hairline-strong);
-                }
-                .paste-btn--parse:hover:not(:disabled) { border-color: var(--primary); color: var(--primary); }
-                .paste-btn--apply {
-                    background: var(--primary);
-                    color: var(--on-primary);
-                }
-                .paste-btn--apply:hover { background: var(--primary-active); }
-
-                .paste-preview {
-                    display: flex;
-                    flex-direction: column;
-                    gap: 10px;
-                    padding-top: 4px;
-                    border-top: 1px solid var(--hairline);
-                }
-                .paste-preview__count {
-                    font-size: 12px;
-                    font-weight: 600;
-                    color: var(--up);
-                }
-                .paste-preview__list {
-                    display: flex;
-                    flex-wrap: wrap;
-                    gap: 5px;
-                }
-                .paste-preview__chip {
-                    display: inline-flex;
-                    align-items: center;
-                    gap: 5px;
-                    background: var(--canvas);
-                    border: 1px solid var(--hairline);
-                    border-radius: var(--r-pill);
-                    font-size: 11px;
-                    color: var(--body);
-                    padding: 3px 10px;
-                }
-                .paste-preview__chip--more {
-                    color: var(--muted);
-                    font-style: italic;
-                }
-                .paste-preview__group {
-                    font-family: var(--font-display);
-                    font-size: 10px;
-                    font-weight: 700;
-                    color: var(--primary);
-                }
-            `}</style>
         </div>
     );
 }

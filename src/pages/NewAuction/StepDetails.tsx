@@ -1,4 +1,5 @@
 import type { WizardDetails } from './NewAuction';
+import './StepDetails.css';
 
 interface StepDetailsProps {
     details: WizardDetails;
@@ -24,7 +25,7 @@ export function StepDetails({ details, onChange }: StepDetailsProps) {
                 />
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 24px' }}>
+            <div className="details-grid">
                 <div className="wiz-field">
                     <label className="wiz-label">Default Purse per Captain (pts)</label>
                     <input
@@ -57,11 +58,10 @@ export function StepDetails({ details, onChange }: StepDetailsProps) {
             <div className="wiz-field">
                 <label className="wiz-label">Number of Groups</label>
                 <input
-                    className="wiz-input"
                     type="number"
                     min={1}
                     max={20}
-                    style={{ maxWidth: 160 }}
+                    className="wiz-input wiz-input--narrow"
                     value={details.numGroups}
                     onChange={e => set({ numGroups: Math.max(1, parseInt(e.target.value) || 1) })}
                 />

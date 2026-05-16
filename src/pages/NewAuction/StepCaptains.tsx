@@ -1,6 +1,6 @@
 import { CAPTAIN_COLORS } from '@/store/auctionStore';
 import type { NewAuctionCaptain } from '@/types';
-
+import './StepCaptains.css';
 
 interface StepCaptainsProps {
     captains: NewAuctionCaptain[];
@@ -31,7 +31,7 @@ export function StepCaptains({ captains, defaultPurse, onChange }: StepCaptainsP
             {/* Count selector */}
             <div className="wiz-field">
                 <label className="wiz-label">Number of Captains</label>
-                <div style={{ display: 'flex', gap: 8 }}>
+                <div className="count-pill-row">
                     {COUNT_OPTIONS.map(n => (
                         <button
                             key={n}
@@ -49,9 +49,9 @@ export function StepCaptains({ captains, defaultPurse, onChange }: StepCaptainsP
             <table className="wiz-table">
                 <thead>
                     <tr>
-                        <th style={{ width: 32 }}>#</th>
+                        <th className="col-idx">#</th>
                         <th>Captain Name</th>
-                        <th style={{ width: 160 }}>Purse (pts)</th>
+                        <th className="col-purse">Purse (pts)</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -59,19 +59,13 @@ export function StepCaptains({ captains, defaultPurse, onChange }: StepCaptainsP
                         <tr key={i}>
                             <td className="wiz-idx">
                                 <span
-                                    style={{
-                                        display: 'inline-block',
-                                        width: 12,
-                                        height: 12,
-                                        borderRadius: '50%',
-                                        background: CAPTAIN_COLORS[i % CAPTAIN_COLORS.length],
-                                    }}
+                                    className="captain-color-dot"
+                                    style={{ background: CAPTAIN_COLORS[i % CAPTAIN_COLORS.length] }}
                                 />
                             </td>
                             <td>
                                 <input
-                                    className="wiz-input"
-                                    style={{ height: 36, fontSize: 14 }}
+                                    className="wiz-input wiz-input--sm"
                                     placeholder={`Captain ${i + 1}`}
                                     value={c.name}
                                     onChange={e => update(i, { name: e.target.value })}
@@ -79,8 +73,7 @@ export function StepCaptains({ captains, defaultPurse, onChange }: StepCaptainsP
                             </td>
                             <td>
                                 <input
-                                    className="wiz-input"
-                                    style={{ height: 36, fontSize: 14 }}
+                                    className="wiz-input wiz-input--sm"
                                     type="number"
                                     min={1}
                                     value={c.purse}
@@ -92,27 +85,7 @@ export function StepCaptains({ captains, defaultPurse, onChange }: StepCaptainsP
                 </tbody>
             </table>
 
-            <style>{`
-                .count-pill {
-                    width: 40px;
-                    height: 40px;
-                    border-radius: var(--r-md);
-                    border: 1px solid var(--hairline-strong);
-                    background: var(--surface-elevated);
-                    color: var(--body);
-                    font-family: var(--font-display);
-                    font-size: 16px;
-                    font-weight: 700;
-                    cursor: pointer;
-                    transition: background 0.15s, border-color 0.15s, color 0.15s;
-                }
-                .count-pill:hover { color: var(--ink); border-color: var(--muted); }
-                .count-pill--active {
-                    background: var(--primary);
-                    border-color: var(--primary);
-                    color: var(--on-primary);
-                }
-            `}</style>
+
         </div>
     );
 }

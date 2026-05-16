@@ -1,0 +1,55 @@
+/* ─── StepCaptains ───────────────────────────────────────────────────────────
+   Step 2 of the auction setup wizard.
+   Fields: captain count picker, then a table of Name + Purse per captain.
+ ──────────────────────────────────────────────────────────────────────────── */
+
+/* Flex row holding the 2–8 count toggle pills */
+.count-pill-row {
+    display: flex;
+    gap: 8px;
+}
+
+/* Individual captain count toggle button (2, 3, 4 …) */
+.count-pill {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--r-md);
+    border: 1px solid var(--hairline-strong);
+    background: var(--surface-elevated);
+    color: var(--body);
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.count-pill:hover {
+    color: var(--ink);
+    border-color: var(--muted);
+}
+
+.count-pill--active {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: var(--on-primary);
+}
+
+/* Captain color swatch in the # column of the table */
+.captain-color-dot {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    /* background is set via inline style (dynamic per captain) */
+}
+
+/* Compact table-cell inputs — used for Name and Purse fields in the table */
+.wiz-input--sm {
+    height: 36px;
+    font-size: 14px;
+}
+
+/* Fixed column widths for the captains table */
+.col-idx   { width: 32px; }
+.col-purse { width: 160px; }
