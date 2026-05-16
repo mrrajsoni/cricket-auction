@@ -33,7 +33,7 @@
 }
 
 .player-pool__search:focus {
-    border-color: var(--primary);
+    border-color: var(--primary-text);
     box-shadow: 0 0 0 3px var(--focus-ring);
 }
 
@@ -71,7 +71,7 @@
 .filter-btn--active {
     color: var(--on-primary);
     background: var(--primary);
-    border-color: var(--primary);
+    border-color: var(--primary-text);
     font-weight: 600;
 }
 

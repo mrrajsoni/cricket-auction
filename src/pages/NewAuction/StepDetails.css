@@ -37,6 +37,6 @@
 
 .group-count-pill--active {
     background: var(--primary);
-    border-color: var(--primary);
+    border-color: var(--primary-text);
     color: var(--on-primary);
 }

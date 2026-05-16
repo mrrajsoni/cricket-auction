@@ -110,7 +110,7 @@
     font-family: var(--font-display);
     font-size: 80px;
     font-weight: 800;
-    color: var(--primary);
+    color: var(--primary-text);
     line-height: 1;
     font-variant-numeric: tabular-nums;
     display: inline-block;

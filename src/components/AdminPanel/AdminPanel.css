@@ -45,12 +45,12 @@
 }
 
 .group-pill:hover:not(:disabled) {
-    border-color: var(--primary);
+    border-color: var(--primary-text);
 }
 
 .group-pill--active {
     background: var(--primary);
-    border-color: var(--primary);
+    border-color: var(--primary-text);
 }
 
 .group-pill--active .group-pill__letter,
@@ -132,7 +132,7 @@
 
 .player-list-row--current {
     background: var(--surface-elevated);
-    border-color: var(--primary);
+    border-color: var(--primary-text);
     border-left-width: 3px;
 }
 
@@ -283,8 +283,8 @@
 }
 
 .admin-btn--secondary:hover:not(:disabled) {
-    border-color: var(--primary);
-    color: var(--primary);
+    border-color: var(--primary-text);
+    color: var(--primary-text);
 }
 
 .admin-btn--ghost {

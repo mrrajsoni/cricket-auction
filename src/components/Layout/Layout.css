@@ -27,7 +27,7 @@
     font-size: 20px;
     font-weight: 800;
     letter-spacing: 0.05em;
-    color: var(--primary);
+    color: var(--primary-text);
     text-transform: uppercase;
 }
 

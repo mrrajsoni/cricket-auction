@@ -51,13 +51,13 @@
 }
 
 .wizard-step-dot--reachable:hover {
-    border-color: var(--primary);
-    color: var(--primary);
+    border-color: var(--primary-text);
+    color: var(--primary-text);
     transform: scale(1.1);
 }
 
 .wizard-step-dot--active {
-    border-color: var(--primary);
+    border-color: var(--primary-text);
     background: var(--primary);
     color: var(--on-primary);
 }
@@ -86,7 +86,7 @@
 }
 
 .wizard-step-label--reachable:hover {
-    color: var(--primary);
+    color: var(--primary-text);
 }
 
 .wizard-step-line {
@@ -154,7 +154,7 @@
 }
 
 .wiz-input:focus {
-    border-color: var(--primary);
+    border-color: var(--primary-text);
     box-shadow: 0 0 0 3px var(--focus-ring);
 }
 

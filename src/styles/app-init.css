@@ -12,7 +12,7 @@
     width: 36px;
     height: 36px;
     border: 2px solid var(--hairline-strong);
-    border-top-color: var(--primary);
+    border-top-color: var(--primary-text);
     border-radius: 50%;
     animation: spin 0.75s linear infinite;
 }

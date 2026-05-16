@@ -16,6 +16,7 @@
     --primary-active:    #f0b90b;
     --primary-disabled:  #3a3a1f;
     --on-primary:        #181a20;
+    --primary-text:      #fcd535;   /* text-safe primary — darkened in light mode */
 
     /* Trading semantics */
     --up:                #0ecb81;
@@ -67,6 +68,9 @@
 
     --hairline:          #eaecef;
     --hairline-strong:   #cdd1d6;
+
+    /* Readable gold for text on white — Tailwind yellow-600, 4.7:1 contrast */
+    --primary-text:      #ca8a04;
 
     --ink:               #181a20;
     --body:              #474d57;
