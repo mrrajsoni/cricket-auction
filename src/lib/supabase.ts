@@ -1,4 +1,4 @@
-// ── Row types matching the DB schema ──────────────────────────────────────────
+// ── Row types matching the DB schema ─────────────────────────────────────────
 
 export interface DbAuction {
     id: string;
@@ -34,5 +34,21 @@ export interface DbBid {
     player_id: string;
     captain_id: string;
     sold_points: number;
+    created_at: string;
+}
+
+export interface DbProfile {
+    id: string;
+    role: 'admin' | 'captain';
+    captain_id: string | null;
+    created_at: string;
+}
+
+export interface DbCaptainInvite {
+    id: string;
+    auction_id: string;
+    captain_id: string;
+    email: string;
+    used: boolean;
     created_at: string;
 }

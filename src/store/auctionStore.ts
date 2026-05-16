@@ -80,15 +80,39 @@ export const useAuctionStore = create<AuctionState>((set, get) => ({
     initialize: async () => {
         set({ loading: true, error: null });
 
-        // 1. Load active auction
-        const { data: auction, error: aErr } = await supabase
+        // 1. Determine which auction to load based on auth role
+        const { data: { user } } = await supabase.auth.getUser();
+        let auctionQuery = supabase
             .from("auctions")
             .select("id")
             .eq("status", "active")
             .order("created_at", { ascending: false })
-            .limit(1)
-            .single();
-        debugger;
+            .limit(1);
+
+        if (user) {
+            const { data: profile } = await supabase
+                .from("profiles")
+                .select("role, captain_id")
+                .eq("id", user.id)
+                .single();
+
+            if (profile?.role === "admin") {
+                // Scope to this admin's own auctions
+                auctionQuery = auctionQuery.eq("admin_id", user.id);
+            } else if (profile?.role === "captain" && profile.captain_id) {
+                // Load the auction linked to this captain slot
+                const { data: captain } = await supabase
+                    .from("captains")
+                    .select("auction_id")
+                    .eq("id", profile.captain_id)
+                    .single();
+                if (captain) {
+                    auctionQuery = auctionQuery.eq("id", captain.auction_id);
+                }
+            }
+        }
+
+        const { data: auction, error: aErr } = await auctionQuery.single();
 
         if (aErr || !auction) {
             set({
@@ -354,13 +378,15 @@ export const useAuctionStore = create<AuctionState>((set, get) => ({
             .update({ status: 'completed' })
             .eq('status', 'active');
 
-        // 2. Create the new auction
+        // 2. Create the new auction (scoped to the current admin)
+        const { data: { user } } = await supabase.auth.getUser();
         const { data: auction, error: aErr } = await supabase
             .from('auctions')
             .insert({
                 name: data.name,
                 status: 'active',
                 date: new Date().toISOString().split('T')[0],
+                admin_id: user?.id ?? null,
             })
             .select('id')
             .single();

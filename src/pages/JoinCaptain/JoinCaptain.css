@@ -1,0 +1,86 @@
+/* ─── JoinCaptain — magic link landing page ─────────────────────────────────
+   Shown after a captain clicks their invite link.
+   Displays loading / success / error states while claiming the invite.
+ ──────────────────────────────────────────────────────────────────────────── */
+
+.join-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: var(--canvas);
+}
+
+.join-card {
+    width: 100%;
+    max-width: 380px;
+    background: var(--surface-card);
+    border: 1px solid var(--hairline-strong);
+    border-radius: var(--r-lg);
+    padding: 40px 32px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.join-card__brand {
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--primary-text);
+    margin-bottom: 8px;
+}
+
+.join-card__title {
+    font-family: var(--font-display);
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--ink);
+}
+
+.join-card__sub {
+    font-size: 14px;
+    color: var(--muted);
+}
+
+.join-card__error {
+    font-size: 13px;
+    color: var(--down);
+    background: var(--down-bg);
+    border: 1px solid var(--down);
+    border-radius: var(--r-sm);
+    padding: 10px 14px;
+    width: 100%;
+}
+
+/* Spinner shown while claiming */
+.join-spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid var(--hairline-strong);
+    border-top-color: var(--primary);
+    border-radius: 50%;
+    animation: join-spin 0.75s linear infinite;
+}
+
+@keyframes join-spin { to { transform: rotate(360deg); } }
+
+/* Success checkmark */
+.join-check {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: var(--up-bg);
+    border: 2px solid var(--up);
+    color: var(--up);
+    font-size: 22px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

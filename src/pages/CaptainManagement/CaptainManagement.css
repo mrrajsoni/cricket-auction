@@ -1,0 +1,152 @@
+/* ─── CaptainManagement — admin sends magic-link invites to captains ─────────
+   Rendered inside the Dashboard (admin only).
+ ──────────────────────────────────────────────────────────────────────────── */
+
+.cap-mgmt {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.cap-mgmt__header { display: flex; flex-direction: column; gap: 4px; }
+
+.cap-mgmt__title {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--ink);
+}
+
+.cap-mgmt__sub {
+    font-size: 13px;
+    color: var(--muted);
+}
+
+/* Global error banner */
+.cap-mgmt__error {
+    font-size: 13px;
+    color: var(--down);
+    background: var(--down-bg);
+    border: 1px solid var(--down);
+    border-radius: var(--r-sm);
+    padding: 10px 14px;
+}
+
+.cap-mgmt__empty {
+    font-size: 14px;
+    color: var(--muted);
+    text-align: center;
+    padding: 32px;
+}
+
+/* Captain list */
+.cap-mgmt__list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* One captain row: identity left, invite controls right */
+.cap-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: var(--surface-card);
+    border: 1px solid var(--hairline-strong);
+    border-radius: var(--r-lg);
+    padding: 14px 18px;
+}
+
+.cap-row__identity {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 0 0 180px;
+}
+
+/* Colour dot matching the captain's assigned colour */
+.cap-row__dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    /* background set via inline style */
+}
+
+.cap-row__name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink);
+}
+
+/* Email input + send button row */
+.cap-row__invite {
+    display: flex;
+    gap: 8px;
+    flex: 1;
+}
+
+.cap-row__input {
+    flex: 1;
+    height: 38px;
+    background: var(--surface-elevated);
+    border: 1px solid var(--hairline-strong);
+    border-radius: var(--r-md);
+    color: var(--ink);
+    font-size: 14px;
+    padding: 0 12px;
+    outline: none;
+    transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.cap-row__input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px var(--focus-ring);
+}
+
+/* "Send Invite" button */
+.cap-row__btn {
+    height: 38px;
+    padding: 0 18px;
+    background: var(--primary);
+    border: none;
+    border-radius: var(--r-sm);
+    color: var(--on-primary);
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background 0.15s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 100px;
+}
+
+.cap-row__btn:hover:not(:disabled) { background: var(--primary-active); }
+.cap-row__btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* "Invite sent" success indicator */
+.cap-row__sent {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--up);
+    background: var(--up-bg);
+    border: 1px solid var(--up);
+    border-radius: var(--r-pill);
+    padding: 4px 12px;
+}
+
+/* Spinner inside send button */
+.cap-row__spinner {
+    width: 14px;
+    height: 14px;
+    border: 2px solid rgba(0, 0, 0, 0.2);
+    border-top-color: var(--on-primary);
+    border-radius: 50%;
+    animation: cap-spin 0.7s linear infinite;
+}
+
+@keyframes cap-spin { to { transform: rotate(360deg); } }

@@ -1,5 +1,14 @@
 export type Group = 'A' | 'B' | 'C' | 'D';
 
+export type UserRole = 'admin' | 'captain';
+
+export interface AuthUser {
+    id: string;
+    email: string;
+    role: UserRole;
+    captainId: string | null;
+}
+
 export interface Captain {
     id: string;
     name: string;
