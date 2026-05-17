@@ -1,10 +1,13 @@
-import { useState, FormEvent } from 'react';
+import { useState, FormEvent, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuthStore } from '@/store/authStore';
 import './Login.css';
 
 export function Login() {
-    const { signIn, error, loading } = useAuthStore();
+    const { signIn, error, clearError } = useAuthStore();
+
+    // Clear any stale error when the user navigates away from this page
+    useEffect(() => () => { clearError(); }, []);
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -57,7 +60,7 @@ export function Login() {
                     <button
                         className="auth-btn"
                         type="submit"
-                        disabled={submitting || loading || !email || !password}
+                        disabled={submitting || !email || !password}
                     >
                         {submitting ? <span className="auth-spinner" /> : 'Sign In'}
                     </button>
